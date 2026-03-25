@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Coursework Tracker | Student Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container-fluid py-3 py-md-4">
+        <div class="container">
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+                <div class="header-title">
+                    <h1 class="display-5 fw-bold gradient-text">
+                        <i class="fas fa-tasks me-2"></i>Coursework Tracker
+                    </h1>
+                    <p class="text-muted">Stay organized, never miss a deadline</p>
+                </div>
+                <div class="d-flex gap-2">
+                    <span class="badge bg-primary fs-6 p-3" id="totalTasksDisplay">
+                        <i class="fas fa-list me-1"></i>Total: 0
+                    </span>
+                </div>
+            </div>
+
+            <!-- Add Task Form Card -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-white">
+                    <h5 class="card-title mb-0 fw-bold">
+                        <i class="fas fa-plus-circle text-primary me-2"></i>Add New Assignment
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form id="taskForm">
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <label for="courseName" class="form-label fw-semibold">
+                                    <i class="fas fa-book me-1"></i>Course Name
+                                </label>
+                                <input type="text" class="form-control" id="courseName" 
+                                       placeholder="e.g., Web Development" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="assignmentTitle" class="form-label fw-semibold">
+                                    <i class="fas fa-file-alt me-1"></i>Assignment Title
+                                </label>
+                                <input type="text" class="form-control" id="assignmentTitle" 
+                                       placeholder="e.g., Final Project" required>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="deadlineDate" class="form-label fw-semibold">
+                                    <i class="fas fa-calendar-alt me-1"></i>Deadline
+                                </label>
+                                <input type="date" class="form-control" id="deadlineDate" required>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="prioritySelect" class="form-label fw-semibold">
+                                    <i class="fas fa-flag me-1"></i>Priority
+                                </label>
+                                <select class="form-select" id="prioritySelect">
+                                    <option value="High">🔴 High</option>
+                                    <option value="Medium" selected>🟠 Medium</option>
+                                    <option value="Low">🟢 Low</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 d-flex align-items-end">
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <i class="fas fa-plus me-1"></i>Add Task
+                                </button>
+                            </div>
+                        </div>
+                        <div id="formError" class="alert alert-danger mt-3 d-none"></div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Summary Section -->
+            <div class="row mb-4">
+                <div class="col-md-4 mb-3">
+                    <div class="card stat-card text-center h-100">
+                        <div class="card-body">
+                            <i class="fas fa-tasks fa-2x text-primary mb-2"></i>
+                            <h3 class="card-title h2 fw-bold" id="statTotal">0</h3>
+                            <p class="card-text text-muted">Total Tasks</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card stat-card text-center h-100">
+                        <div class="card-body">
+                            <i class="fas fa-check-circle fa-2x text-success mb-2"></i>
+                            <h3 class="card-title h2 fw-bold" id="statCompleted">0</h3>
+                            <p class="card-text text-muted">Completed Tasks</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card stat-card text-center h-100">
+                        <div class="card-body">
+                            <i class="fas fa-hourglass-half fa-2x text-warning mb-2"></i>
+                            <h3 class="card-title h2 fw-bold" id="statPending">0</h3>
+                            <p class="card-text text-muted">Pending Tasks</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h5 class="mb-0 fw-bold">
+                            <i class="fas fa-chart-line text-primary me-2"></i>Overall Progress
+                        </h5>
+                        <span class="fw-bold" id="progressPercent">0%</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" 
+                             id="progressFill">
+                            0%
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+                <h5 class="fw-bold mb-2 mb-md-0">
+                    <i class="fas fa-filter me-2"></i>Filter Tasks
+                </h5>
+                <div class="btn-group flex-wrap gap-2" role="group">
+                    <button data-filter="all" class="btn btn-outline-primary filter-btn active">
+                        <i class="fas fa-list me-1"></i>All
+                    </button>
+                    <button data-filter="Pending" class="btn btn-outline-warning filter-btn">
+                        <i class="fas fa-hourglass-half me-1"></i>Pending
+                    </button>
+                    <button data-filter="Completed" class="btn btn-outline-success filter-btn">
+                        <i class="fas fa-check-circle me-1"></i>Completed
+                    </button>
+                    <button data-filter="High" class="btn btn-outline-danger filter-btn">
+                        <i class="fas fa-flag me-1"></i>High
+                    </button>
+                    <button data-filter="Medium" class="btn btn-outline-warning filter-btn">
+                        <i class="fas fa-flag me-1"></i>Medium
+                    </button>
+                    <button data-filter="Low" class="btn btn-outline-info filter-btn">
+                        <i class="fas fa-flag me-1"></i>Low
+                    </button>
+                </div>
+            </div>
+
+        
+            <div id="tasksContainer" class="row g-3">
+                
+            </div>2
+
+            
+            <div id="emptyState" class="text-center py-5 d-none">
+                <i class="fas fa-clipboard-list fa-3x text-muted mb-3"></i>
+                <h4 class="text-muted">No tasks found</h4>
+                <p class="text-muted">Add your first assignment to get started!</p>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
