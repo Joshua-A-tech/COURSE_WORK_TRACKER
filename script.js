@@ -15,7 +15,7 @@ const progressFill = document.getElementById("progressFill");
 const progressPercent = document.getElementById("progressPercent");
 const taskForm = document.getElementById("taskForm");
 const formError = document.getElementById("formError");
-//const darkModeToggle = document.getElementById("darkModeToggleBtn");
+const darkModeToggle = document.getElementById("darkModeToggleBtn");
 
 // Initialize Application
 document.addEventListener("DOMContentLoaded", () => {
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // Setup Event Listeners
 function setupEventListeners() {
     taskForm.addEventListener("submit", handleAddTask);
-    //darkModeToggle.addEventListener("click", toggleDarkMode);
+    darkModeToggle.addEventListener("click", toggleDarkMode);
 }
 
 // Setup Filter Buttons
